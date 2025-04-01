@@ -1,0 +1,1 @@
+<h1>CITY: <?php echo e($city->city); ?> (<?php echo e($city->country) ?>)</h1>
