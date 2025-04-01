@@ -17,4 +17,9 @@ class WorldCityModel
         public int $population,
 
     ) {}
+
+    public function getCityWithCountry(): string
+    {
+        return "{$this->city} ($this->country)";
+    }
 }

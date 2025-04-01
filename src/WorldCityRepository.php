@@ -6,19 +6,8 @@ class WorldCityRepository
 {
     public function __construct(private PDO $pdo) {}
 
-    public function fetchById(int $id): ?WorldCityModel
+    private function arrayToModel(array $entry): WorldCityModel
     {
-        $stmt = $this->pdo->prepare('SELECT * 
-            FROM `worldcities` 
-            WHERE `id` = :id');
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $entry = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($entry === false) {
-            return null;
-        }
-
         return new WorldCityModel(
             $entry['id'],
             $entry['city'],
@@ -34,6 +23,22 @@ class WorldCityRepository
         );
     }
 
+    public function fetchById(int $id): ?WorldCityModel
+    {
+        $stmt = $this->pdo->prepare('SELECT * 
+            FROM `worldcities` 
+            WHERE `id` = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $entry = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($entry === false) {
+            return null;
+        }
+
+        return $this->arrayToModel($entry);
+    }
+
     public function fetch(): array
     {
         $stmt = $this->pdo->prepare('SELECT *
@@ -47,19 +52,7 @@ class WorldCityRepository
         $models = [];
         $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($entries as  $entry) {
-            $models[] = new WorldCityModel(
-                $entry['id'],
-                $entry['city'],
-                $entry['city_ascii'],
-                (float) $entry['lat'],
-                (float) $entry['lng'],
-                $entry['country'],
-                $entry['iso2'],
-                $entry['iso3'],
-                $entry['admin_name'],
-                $entry['capital'],
-                $entry['population'],
-            );
+            $models[] = $this->arrayToModel($entry);
         }
 
         return $models;
