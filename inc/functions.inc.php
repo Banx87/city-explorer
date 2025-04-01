@@ -13,6 +13,5 @@ function render($view, $params)
     require __DIR__ . '/../views/pages/' . $view . '.php';
     $contents = ob_get_clean();
 
-    $alphabet = gen_alphabet();
     require __DIR__ . '/../views/layouts/main.view.php';
 }
