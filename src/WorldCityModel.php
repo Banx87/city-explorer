@@ -20,6 +20,11 @@ class WorldCityModel
 
     public function getCityWithCountry(): string
     {
-        return "{$this->city} ($this->country)";
+        return "{$this->city} ($this->country) {$this->getFlag()}";
+    }
+
+    public function getFlag(): string
+    {
+        return get_flag_for_country($this->iso2);
     }
 }
