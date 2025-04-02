@@ -28,3 +28,14 @@ function get_flag_for_country(string $iso2): string
 
     return mb_chr(127462 + ord($iso2[0]) - ord('a')) . mb_chr(127462 + ord($iso2[1]) - ord('a'));
 }
+
+function redirectToHome()
+{
+    header('Location: index.php');
+    die();
+}
+
+function redirectToCity($id)
+{
+    header('Location: city.php?id=' . $id . '.php');
+}
