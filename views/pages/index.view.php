@@ -11,8 +11,8 @@
 </ul>
 
 <?php if ($pagination['page'] > 1) { ?>
-    <a href="index.php?<?php echo http_build_query(['page' => $pagination['page'] - 1]); ?>">Previous/Edellinen</a>
+    <a href="index.php?<?php echo http_build_query(['page' => $pagination['page'] - 1]); ?>">Previous</a>
 <?php  } ?>
 <?php if ($pagination['perPage'] * $pagination['page'] < $pagination['count']) { ?>
-    <a href="index.php?<?php echo http_build_query(['page' => $pagination['page'] + 1]); ?>">Next/Seuraava</a>
+    <a href="index.php?<?php echo http_build_query(['page' => $pagination['page'] + 1]); ?>">Next</a>
 <?php  } ?>
