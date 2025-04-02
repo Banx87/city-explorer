@@ -89,4 +89,21 @@ class WorldCityRepository
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['count'];
     }
+
+    public function update(int $id, array $properties): bool
+    {
+
+        $fields = [];
+        $params = [':id' => $id];
+
+        foreach ($properties as $key => $value) {
+            $fields[] = "`$key` = :$key";
+            $params[":$key"] = $value;
+        }
+
+        $sql = 'UPDATE `worldcities` SET ' . implode(', ', $fields) . ' WHERE `id` = :id';
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute($params);
+    }
 }
